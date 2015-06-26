@@ -96,7 +96,7 @@ impl Parser {
     fn consume_char(&mut self) -> char {
         let mut it = self.input[self.pos..].char_indices();
         let (_, ret) = it.next().unwrap();
-        let (next_pos, _) = it.next().unwrap();
+        let (next_pos, _) = it.next().unwrap_or((1, ' '));
         self.pos += next_pos;
         return ret;
     }

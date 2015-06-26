@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::io::Write;
 
 pub struct Node {
     pub children: Vec<Node>,
@@ -43,20 +44,26 @@ pub fn pretty_print(root: &Node)
 
 fn _pretty_print(root: &Node, indent: i32)
 {
-    for _ in 0..indent {
-        println!("    ");
-    }
-
+    _print_indent(indent);
     let root = root.clone();
     match &root.node_type {
-        &NodeType::Text(ref text) => println!("{}", text),
+        &NodeType::Text(ref text) => print!("{}\n", text),
         &NodeType::Element(ref elem_data) => {
-            println!("<{}>", elem_data.tag_name);
+            print!("<{}>\n", elem_data.tag_name);
             for child in root.children.iter() {
-                _pretty_print(child, indent-1);
+                _pretty_print(child, indent+1);
             }
-            println!("</{}>", elem_data.tag_name);
+            _print_indent(indent);
+            print!("</{}>\n", elem_data.tag_name);
         }
     }
-    println!("");
+    ::std::io::stdout().flush().unwrap();
+
+}
+
+fn _print_indent(indent: i32) {
+    for _ in 0..indent {
+        print!("    ");
+        ::std::io::stdout().flush().unwrap();
+    }
 }
