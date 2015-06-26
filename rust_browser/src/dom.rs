@@ -43,12 +43,14 @@ pub fn pretty_print(root: &Node)
 
 fn _pretty_print(root: &Node, indent: i32)
 {
-    for n in 0..indent {
+    for _ in 0..indent {
         println!("    ");
     }
-    match root.node_type {
-        NodeType::Text(text) => println!("{}", text),
-        NodeType::Element(elem_data) => {
+
+    let root = root.clone();
+    match &root.node_type {
+        &NodeType::Text(ref text) => println!("{}", text),
+        &NodeType::Element(ref elem_data) => {
             println!("<{}>", elem_data.tag_name);
             for child in root.children.iter() {
                 _pretty_print(child, indent-1);
