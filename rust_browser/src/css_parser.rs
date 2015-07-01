@@ -1,38 +1,45 @@
+#[derive(Debug)]
 pub struct Stylesheet {
     pub rules : Vec<Rule>,
 }
 
+#[derive(Debug)]
 pub struct Rule {
     pub selectors : Vec<Selector>,
     pub declarations : Vec<Declaration>,
 }
 
-
+#[derive(Debug)]
 pub enum Selector {
     Simple(SimpleSelector),
 }
 
+#[derive(Debug)]
 pub struct SimpleSelector {
     pub tag : Option<String>,
     pub id : Option<String>,
     pub class : Vec<String>,
 }
 
+#[derive(Debug)]
 pub struct Declaration {
     pub name : String,
     pub value : CSSValue,
 }
 
+#[derive(Debug)]
 pub enum CSSValue {
     Length(f32, Unit),
     ColorVal(Color),
     Keyword(String),
 }
 
+#[derive(Debug)]
 pub enum Unit {
     Px,
 }
 
+#[derive(Debug)]
 pub struct Color {
     pub r : u8,
     pub g : u8,
@@ -41,6 +48,14 @@ pub struct Color {
 }
 
 pub type Specificity = (usize, usize, usize);
+
+impl Stylesheet {
+    pub fn pretty_print(&self)  {
+        for rule in self.rules.iter() {
+            println!("{:?}", rule);
+        }
+    }
+}
 
 impl Selector {
     pub fn specificity(&self) -> Specificity {
