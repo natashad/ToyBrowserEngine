@@ -27,19 +27,19 @@ pub struct Declaration {
     pub value : CSSValue,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum CSSValue {
     Length(f32, Unit),
     ColorVal(Color),
     Keyword(String),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum Unit {
     Px,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Default)]
 pub struct Color {
     pub r : u8,
     pub g : u8,
